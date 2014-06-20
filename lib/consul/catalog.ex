@@ -18,10 +18,10 @@ defmodule Consul.Catalog do
   end
 
   def service(name) do
-    req_get("catalog/services/#{name}")
+    req_get("catalog/service/#{name}")
   end
 
   def service(index, name, opts \\ [wait: "10m"]) do
-    req_get("catalog/services/#{name}?index=#{index}&wait=#{opts[:wait]}")
+    req_get("catalog/service/#{name}?index=#{index}&wait=#{opts[:wait]}")
   end
 end
