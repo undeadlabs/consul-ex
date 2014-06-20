@@ -14,6 +14,16 @@ defmodule Consul.Request do
     end
   end
 
+  @doc false
+  def request(method, url, body \\ "", headers \\ [], options \\ []) do
+    try do
+      super(method, url, body, headers, options)
+    rescue
+      error in [HTTPoison.HTTPError] ->
+        error.message
+    end
+  end
+
   #
   # Private API
   #
