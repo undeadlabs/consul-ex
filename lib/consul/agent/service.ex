@@ -1,7 +1,7 @@
 defmodule Consul.Agent.Service do
   use Consul.Endpoint, handler: Consul.Handler.Base
 
-  def register(body) do
+  def register(%{"Name" => _} = body) do
     req_put("agent/service/register", JSEX.encode!(body))
   end
 
