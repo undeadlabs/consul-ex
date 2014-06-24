@@ -5,6 +5,14 @@ defmodule Consul.Agent do
     req_get("agent/checks")
   end
 
+  def join(address) do
+    req_get("agent/join/#{address}")
+  end
+
+  def force_leave(node) do
+    req_get("agent/force-leave/#{node}")
+  end
+
   def members do
     req_get("agent/members")
   end
