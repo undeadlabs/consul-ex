@@ -13,6 +13,10 @@ defmodule Consul.Health do
     req_get("health/service/#{id}")
   end
 
+  def service(index, id, opts \\ [wait: "10m"]) do
+    req_get("health/service/#{id}?index=#{index}&wait=#{opts[:wait]}")
+  end
+
   def state(id) do
     req_get("health/state/#{id}")
   end
