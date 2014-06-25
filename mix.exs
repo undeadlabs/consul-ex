@@ -11,7 +11,7 @@ defmodule Consul.Mixfile do
 
   def application do
     [
-      applications: [:httpoison],
+      applications: [:httpoison, :jsex],
       mod: {Consul, []},
       env: [
         host: "localhost",
