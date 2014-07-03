@@ -4,7 +4,7 @@ defmodule Consul.Mixfile do
   def project do
     [app: :consul,
      version: "0.0.1",
-     elixir: "~> 0.13.3",
+     elixir: "~> 0.13",
      config_path: "config/#{Mix.env}.exs",
      deps: deps]
   end
@@ -23,7 +23,7 @@ defmodule Consul.Mixfile do
   defp deps do
     [
       {:jsex, "~> 2.0"},
-      {:httpoison, github: "edgurgel/httpoison", tag: "0.1.1"},
+      {:httpoison, "~> 0.3.1", github: "edgurgel/httpoison"},
     ]
   end
 end
