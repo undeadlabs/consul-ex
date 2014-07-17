@@ -1,4 +1,7 @@
-Consul
-======
+# Consul
 
-** TODO: Add description **
+A simple Elixir HTTP client for Consul
+
+## Authors
+
+Jamie Winsor (<jamie@undeadlabs.com>)

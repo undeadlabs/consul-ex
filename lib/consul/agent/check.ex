@@ -1,3 +1,9 @@
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 Undead Labs, LLC
+#
+
 defmodule Consul.Agent.Check do
   use Consul.Endpoint, handler: Consul.Handler.Base
 
