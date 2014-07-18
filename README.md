@@ -1,5 +1,7 @@
 # Consul
 
+[![Build Status](https://travis-ci.org/undeadlabs/consul-ex.png?branch=master)](https://travis-ci.org/undeadlabs/consul-ex)
+
 A simple Elixir HTTP client for Consul
 
 ## Requirements
