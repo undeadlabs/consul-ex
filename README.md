@@ -19,15 +19,12 @@ end
 
 defp deps do
   [
-    {:consul, "~> 0.1.0"},
-    {:hackney, github: "benoitc/hackney"},
+    {:consul, "~> 0.1.0"}
   ]
 end
 ```
 
 Then run `mix deps.get` in your shell to fetch the dependencies.
-
-> NOTE: Hackney is currently not hosted on [Hex](https://hex.pm) so it must be added explicitly as a github dependency
 
 ## Authors
 

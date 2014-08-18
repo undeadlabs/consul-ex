@@ -29,8 +29,7 @@ defmodule Consul.Mixfile do
   defp deps do
     [
       {:jsex, "~> 2.0"},
-      {:httpoison, "~> 0.3.0"},
-      {:hackney, github: "benoitc/hackney"},
+      {:httpoison, "~> 0.4.0"},
     ]
   end
 
