@@ -5,7 +5,7 @@ defmodule Consul.Mixfile do
     [
       app: :consul,
       version: "0.1.2",
-      elixir: "~> 0.15.0 or ~> 1.0.0-rc1",
+      elixir: "~> 1.0.0 or ~> 0.15.1",
       deps: deps,
       package: package,
       description: description
