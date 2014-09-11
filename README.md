@@ -6,7 +6,7 @@ A simple Elixir HTTP client for Consul
 
 ## Requirements
 
-* Elixir 0.14.0 or newer
+* Elixir 0.15.1 or newer
 
 ## Installation
 
