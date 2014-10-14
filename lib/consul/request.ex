@@ -8,7 +8,14 @@ defmodule Consul.Request do
   use HTTPoison.Base
 
   def process_url(url) do
-    "http://#{host}:#{port}/v1/" <> url
+    case String.downcase(url) do
+      <<"http://"::utf8, _::binary>> ->
+        url
+      <<"https://"::utf8, _::binary>> ->
+        url
+      _ ->
+        Path.join("http://#{host}:#{port}/v1", url)
+    end
   end
 
   def process_response_body(body) do
@@ -17,16 +24,6 @@ defmodule Consul.Request do
         decoded
       _ ->
         body
-    end
-  end
-
-  @doc false
-  def request(method, url, body \\ "", headers \\ [], options \\ []) do
-    try do
-      super(method, url, body, headers, options)
-    rescue
-      error in [HTTPoison.HTTPError] ->
-        error.message
     end
   end
 

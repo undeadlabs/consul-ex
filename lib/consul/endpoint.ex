@@ -37,7 +37,8 @@ defmodule Consul.Endpoint do
         Request.options(url, headers, options) |> handle_response
       end
 
-      defp handle_response(response), do: unquote(handler).handle(response)
+      defp handle_response({:ok, response}), do: unquote(handler).handle(response)
+      defp handle_response({:error, _} = error), do: error
     end
   end
 end
