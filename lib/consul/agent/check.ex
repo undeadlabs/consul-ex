@@ -8,7 +8,7 @@ defmodule Consul.Agent.Check do
   use Consul.Endpoint, handler: Consul.Handler.Base
 
   def register(body) do
-    req_put("agent/check/register", JSEX.encode!(body))
+    req_put("agent/check/register", JSX.encode!(body))
   end
 
   def deregister(id) do

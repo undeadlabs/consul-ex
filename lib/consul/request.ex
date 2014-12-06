@@ -19,7 +19,7 @@ defmodule Consul.Request do
   end
 
   def process_response_body(body) do
-    case JSEX.decode(body) do
+    case JSX.decode(body) do
       {:ok, decoded} ->
         decoded
       _ ->
