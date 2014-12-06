@@ -12,7 +12,7 @@ defmodule Consul.Catalog do
   end
 
   def deregister(%{"Datacenter" => _, "Node" => _} = body) do
-    req_put("catalog/deregister", JSEX.encode!(body))
+    req_put("catalog/deregister", JSX.encode!(body))
   end
 
   def nodes do

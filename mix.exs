@@ -16,7 +16,7 @@ defmodule Consul.Mixfile do
     [
       applications: [
         :httpoison,
-        :jsex
+        :exjsx
       ],
       mod: {Consul, []},
       env: [
@@ -28,7 +28,7 @@ defmodule Consul.Mixfile do
 
   defp deps do
     [
-      {:jsex, "~> 2.0"},
+      {:exjsx, "~> 3.0"},
       {:httpoison, "~> 0.5.0"},
     ]
   end
