@@ -19,7 +19,7 @@ end
 
 defp deps do
   [
-    {:consul, "~> 0.1.0"}
+    {:consul, "~> 0.3.0"}
   ]
 end
 ```
