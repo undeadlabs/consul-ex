@@ -5,25 +5,36 @@
 #
 
 defmodule Consul.Health do
+  alias Consul.Endpoint
   use Consul.Endpoint, handler: Consul.Handler.Base
 
-  def checks(id) do
-    req_get("health/checks/#{id}")
+  @checks  "checks"
+  @health  "health"
+  @node    "node"
+  @service "service"
+  @state   "state"
+
+  @spec checks(binary, Keyword.t) :: Endpoint.response
+  def checks(id, opts \\ []) do
+    build_url([@health, @checks, id], opts)
+      |> req_get()
   end
 
-  def node(id) do
-    req_get("health/node/#{id}")
+  @spec node(binary, Keyword.t) :: Endpoint.response
+  def node(id, opts \\ []) do
+    build_url([@health, @node, id], opts)
+      |> req_get()
   end
 
-  def service(id) do
-    req_get("health/service/#{id}")
+  @spec service(binary, Keyword.t) :: Endpoint.response
+  def service(id, opts \\ []) do
+    build_url([@health, @service, id], opts)
+      |> req_get()
   end
 
-  def service(index, id, opts \\ [wait: "10m"]) do
-    req_get("health/service/#{id}?index=#{index}&wait=#{opts[:wait]}")
-  end
-
-  def state(id) do
-    req_get("health/state/#{id}")
+  @spec state(binary, Keyword.t) :: Endpoint.response
+  def state(id, opts \\ []) do
+    build_url([@health, @state, id], opts)
+      |> req_get()
   end
 end

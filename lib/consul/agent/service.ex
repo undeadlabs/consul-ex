@@ -5,13 +5,23 @@
 #
 
 defmodule Consul.Agent.Service do
+  alias Consul.Endpoint
   use Consul.Endpoint, handler: Consul.Handler.Base
 
-  def register(%{"Name" => _} = body) do
-    req_put("agent/service/register", JSX.encode!(body))
+  @agent      "agent"
+  @deregister "deregister"
+  @register   "register"
+  @service    "service"
+
+  @spec register(map, Keyword.t) :: Endpoint.response
+  def register(%{"Name" => _} = body, opts \\ []) do
+    build_url([@agent, @service, @register], opts)
+      |> req_put(JSX.encode!(body))
   end
 
-  def deregister(id) do
-    req_delete("agent/service/deregister/#{id}")
+  @spec deregister(binary, Keyword.t) :: Endpoint.response
+  def deregister(id, opts \\ []) do
+    build_url([@agent, @service, @deregister, id], opts)
+      |> req_delete()
   end
 end

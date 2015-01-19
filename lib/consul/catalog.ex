@@ -5,33 +5,50 @@
 #
 
 defmodule Consul.Catalog do
+  alias Consul.Endpoint
   use Consul.Endpoint, handler: Consul.Handler.Base
 
-  def datacenters do
-    req_get("catalog/datacenters")
+  @catalog     "catalog"
+  @datacenters "datacenters"
+  @deregister  "deregister"
+  @nodes       "nodes"
+  @node        "node"
+  @services    "services"
+  @service     "service"
+
+  @spec datacenters(Keyword.t) :: Endpoint.response
+  def datacenters(opts \\ []) do
+    build_url([@catalog, @datacenters], opts)
+      |> req_get()
   end
 
-  def deregister(%{"Datacenter" => _, "Node" => _} = body) do
-    req_put("catalog/deregister", JSX.encode!(body))
+  @spec deregister(map, Keyword.t) :: Endpoint.response
+  def deregister(%{"Datacenter" => _, "Node" => _} = body, opts \\ []) do
+    build_url([@catalog, @deregister], opts)
+      |> req_put(JSX.encode!(body))
   end
 
-  def nodes do
-    req_get("catalog/nodes")
+  @spec nodes(Keyword.t) :: Endpoint.response
+  def nodes(opts \\ []) do
+    build_url([@catalog, @nodes], opts)
+      |> req_get()
   end
 
-  def node(id) do
-    req_get("catalog/node/#{id}")
+  @spec node(binary, Keyword.t) :: Endpoint.response
+  def node(id, opts \\ []) do
+    build_url([@catalog, @node, id], opts)
+      |> req_get()
   end
 
-  def services do
-    req_get("catalog/services")
+  @spec services(Keyword.t) :: Endpoint.response
+  def services(opts \\ []) do
+    build_url([@catalog, @services], opts)
+      |> req_get()
   end
 
-  def service(name) do
-    req_get("catalog/service/#{name}")
-  end
-
-  def service(index, name, opts \\ [wait: "10m"]) do
-    req_get("catalog/service/#{name}?index=#{index}&wait=#{opts[:wait]}")
+  @spec service(binary, Keyword.t) :: Endpoint.response
+  def service(name, opts \\ []) do
+    build_url([@catalog, @service, name], opts)
+      |> req_get()
   end
 end

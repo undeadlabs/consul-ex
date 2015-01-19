@@ -7,10 +7,13 @@
 defmodule Consul.Handler.Behaviour do
   use Behaviour
 
+  defcallback handle(result :: Consul.Response.t)
+
   defmacro __using__(_) do
     quote do
       @behaviour unquote(__MODULE__)
 
+      @spec handle(Consul.Response.t) :: Consule.Endpoint.response
       def handle(%{status_code: 200} = response) do
         {:ok, response}
       end
@@ -21,6 +24,4 @@ defmodule Consul.Handler.Behaviour do
       defoverridable [handle: 1]
     end
   end
-
-  defcallback handle(result :: any)
 end
