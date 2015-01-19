@@ -5,18 +5,27 @@
 #
 
 defmodule Consul.Kv do
+  alias Consul.Response
   use Consul.Endpoint, handler: Consul.Handler.Kv
 
-  def fetch(key) do
-    req_get("kv/" <> key)
+  @separator "/"
+
+  @spec fetch(binary | [binary], Keyword.t) :: {:ok, Response.t} | {:error, Response.t}
+  def fetch(key, opts \\ [])
+  def fetch(path, opts) when is_list(path) do
+    join_path(path) |> fetch(opts)
+  end
+  def fetch(key, opts) do
+    req_get(join_path(["kv", key]) <> "?" <> URI.encode_query(opts))
   end
 
-  def fetch(index, key, opts \\ [wait: "10m"]) do
-    req_get("kv/" <> key <> "?index=#{index}&wait=#{opts[:wait]}")
+  @spec fetch!(binary | [binary], Keyword.t) :: Response.t | no_return
+  def fetch!(key, opts \\ [])
+  def fetch!(path, opts) when is_list(path) do
+    join_path(path) |> fetch!(opts)
   end
-
-  def fetch!(key) do
-    case fetch(key) do
+  def fetch!(key, opts) do
+    case fetch(key, opts) do
       {:ok, value} ->
         value
       {:error, response} ->
@@ -24,19 +33,18 @@ defmodule Consul.Kv do
     end
   end
 
-  def fetch!(index, key, opts \\ [wait: "10m"]) do
-    case fetch(index, key, opts) do
-      {:ok, value} ->
-        value
-      {:error, response} ->
-        raise(Consul.ResponseError, response)
-    end
+  @spec keys(binary | [binary]) :: {:ok, Response.t} | {:error, Response.t}
+  def keys(path) when is_list(path) do
+    join_path(path) |> keys
   end
-
   def keys(prefix) do
-    req_get("kv/" <> prefix <> "?keys")
+    req_get(join_path(["kv", prefix]) <> "?keys")
   end
 
+  @spec keys!(binary | [binary]) :: Response.t | no_return
+  def keys!(path) when is_list(path) do
+    join_path(path) |> keys!
+  end
   def keys!(prefix) do
     case keys(prefix) do
       {:ok, value} ->
@@ -46,8 +54,13 @@ defmodule Consul.Kv do
     end
   end
 
-  def put(key, value) do
-    case req_put("kv/" <> key, value) do
+  @spec put(binary | [binary], term, Keyword.t) :: {:ok, Response.t} | {:error, Response.t}
+  def put(key, value, opts \\ [])
+  def put(path, value, opts) when is_list(path) do
+    join_path(path) |> put(value, opts)
+  end
+  def put(key, value, opts) do
+    case req_put(join_path(["kv", key]) <> "?" <> URI.encode_query(opts), value) do
       {:ok, %{body: body}} ->
         body
       error ->
@@ -55,12 +68,25 @@ defmodule Consul.Kv do
     end
   end
 
-  def put!(key, value) do
-    case put(key, value) do
+  @spec put!(binary | [binary], term, Keyword.t) :: Response.t | no_return
+  def put!(key, value, opts \\ [])
+  def put!(path, value, opts) when is_list(path) do
+    join_path(path) |> put!(value, opts)
+  end
+  def put!(key, value, opts) do
+    case put(key, value, opts) do
       {:error, response} ->
         raise(Consul.ResponseError, response)
       result ->
         result
     end
+  end
+
+  #
+  # Private
+  #
+
+  defp join_path(path) when is_list(path) do
+    Enum.join(path, @separator)
   end
 end
