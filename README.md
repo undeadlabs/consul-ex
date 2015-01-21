@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/undeadlabs/consul-ex.png?branch=master)](https://travis-ci.org/undeadlabs/consul-ex)
 
-A simple Elixir HTTP client for Consul
+An Elixir client for Consul's HTTP API
 
 ## Requirements
 
-* Elixir 0.15.1 or newer
+* Elixir 1.0.0 or newer
 
 ## Installation
 
@@ -19,7 +19,7 @@ end
 
 defp deps do
   [
-    {:consul, "~> 0.3.0"}
+    {:consul, "~> 1.0.0"}
   ]
 end
 ```

@@ -4,8 +4,8 @@ defmodule Consul.Mixfile do
   def project do
     [
       app: :consul,
-      version: "0.3.0",
-      elixir: "~> 1.0 or ~> 0.15.1",
+      version: "1.0.0",
+      elixir: "~> 1.0",
       deps: deps,
       package: package,
       description: description
@@ -35,7 +35,7 @@ defmodule Consul.Mixfile do
 
   defp description do
     """
-    A simple Elixir HTTP client for Consul
+    An Elixir client for Consul's HTTP API
     """
   end
 
