@@ -52,10 +52,11 @@ defmodule Consul.Watch.Event do
   # Private
   #
 
-  defp notify_events(events, em, nil, _) do
+  defp notify_events([], _em, _index, _last_time), do: :ok
+  defp notify_events(events, em, nil, _last_time) do
     Watch.Handler.notify_events(em, events)
   end
-  defp notify_events(events, em, _, last_time) do
+  defp notify_events(events, em, _index, last_time) do
     [latest|_] = Event.sort(events)
     if latest.l_time > last_time do
       Watch.Handler.notify_events(em, [latest])
