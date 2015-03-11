@@ -7,7 +7,7 @@
 defmodule Consul.Endpoint do
   @path_separator "/"
 
-  @type response :: {:ok, Consul.Resposne.t} | {:error, Consul.Response.t}
+  @type response :: {:ok, Consul.Response.t} | {:error, Consul.Response.t}
 
   @spec build_url(binary | [binary], Keyword.t) :: binary
   def build_url(path, opts \\ [])
