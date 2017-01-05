@@ -26,6 +26,10 @@ end
 
 Then run `mix deps.get` in your shell to fetch the dependencies.
 
+## Docs
+
+Run `mix docs` and open `doc/index.html` to view the documentation.
+
 ## Authors
 
 Jamie Winsor (<jamie@undeadlabs.com>)
