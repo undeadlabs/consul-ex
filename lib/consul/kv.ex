@@ -67,7 +67,12 @@ defmodule Consul.Kv do
 
   @spec delete(binary | [binary], Keyword.t) :: Endpoint.response
   def delete(key, opts \\ []) do
-    List.flatten([@kv, key]) |> req_delete(opts)
+    case List.flatten([@kv, key]) |> build_url(opts) |> req_delete() do
+      {:ok, %{body: body}} ->
+        body
+      error ->
+        error
+    end
   end
 
   @spec delete!(binary | [binary], Keyword.t) :: Response.t | no_return
