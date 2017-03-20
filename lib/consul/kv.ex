@@ -12,10 +12,10 @@ defmodule Consul.Kv do
   @kv "kv"
 
   @spec fetch(binary | [binary], Keyword.t) :: Endpoint.response
-  def fetch(key, opts \\ []) do
+  def fetch(key, opts \\ [], http_opts \\ []) do
     List.flatten([@kv, key])
       |> build_url(opts)
-      |> req_get()
+      |> req_get([], http_opts)
   end
 
   @spec fetch!(binary | [binary], Keyword.t) :: Response.t | no_return
