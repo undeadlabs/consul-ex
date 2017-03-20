@@ -42,7 +42,7 @@ defmodule Consul.Mixfile do
 
   defp package do
     %{licenses: ["MIT"],
-      contributors: ["Jamie Winsor"],
+      maintainers: ["Jamie Winsor"],
       links: %{"Github" => "https://github.com/undeadlabs/consul-ex"}}
   end
 end
