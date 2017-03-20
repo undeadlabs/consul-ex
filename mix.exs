@@ -29,7 +29,7 @@ defmodule Consul.Mixfile do
   defp deps do
     [
       {:exjsx, "~> 3.0"},
-      {:httpoison, "~> 0.6.0"},
+      {:httpoison, "~> 0.7.0"},
       {:ex_doc, "~> 0.14", only: :dev}
     ]
   end
