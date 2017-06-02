@@ -5,8 +5,6 @@
 #
 
 defmodule Consul.Watch.Handler do
-  use Behaviour
-
   @type on_return :: {:ok, term} | :remove_handler
 
   @doc """
@@ -15,7 +13,7 @@ defmodule Consul.Watch.Handler do
 
   See: http://www.consul.io/docs/agent/http.html#event
   """
-  defcallback handle_consul_events(events :: [Consul.Event.t], list) :: on_return
+  @callback handle_consul_events([Consul.Event.t], any) :: on_return
 
   defmacro __using__(_) do
     quote do

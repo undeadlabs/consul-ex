@@ -5,9 +5,8 @@
 #
 
 defmodule Consul.Handler.Behaviour do
-  use Behaviour
 
-  defcallback handle(result :: Consul.Response.t)
+  @callback handle(Consul.Response.t) :: Consule.Endpoint.response
 
   defmacro __using__(_) do
     quote do

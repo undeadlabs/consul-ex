@@ -39,7 +39,7 @@ defmodule Consul.Watch.Event do
   def handle_info(:timeout, %{name: name, index: index, em: em, l_time: l_time} = state) do
     case Event.list(wait: @wait, index: index) do
       {:ok, response} ->
-        events     = Event.from_response(response) |> Enum.filter &(&1.name == name)
+        events     = Event.from_response(response) |> Enum.filter(&(&1.name == name))
         new_l_time = Event.last_time(events)
         notify_events(events, em, index, l_time)
         {:noreply, %{state | index: consul_index(response), l_time: new_l_time}, 0}
