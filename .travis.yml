@@ -1,2 +1,9 @@
 language: elixir
+elixir:
+  - 1.6.6
+otp_release:
+  - 20.0
+env:
+  - MIX_ENV=test
+script: mix test
 sudo: false
