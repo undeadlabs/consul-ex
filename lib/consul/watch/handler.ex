@@ -5,7 +5,6 @@
 #
 
 defmodule Consul.Watch.Handler do
-  use Behaviour
 
   @type on_return :: {:ok, term} | :remove_handler
 
@@ -15,12 +14,12 @@ defmodule Consul.Watch.Handler do
 
   See: http://www.consul.io/docs/agent/http.html#event
   """
-  defcallback handle_consul_events(events :: [Consul.Event.t], list) :: on_return
+  @callback handle_consul_events([Consul.Event.t], any) :: on_return
 
   defmacro __using__(_) do
     quote do
       @behaviour Consul.Watch.Handler
-      use GenEvent
+      @behaviour :gen_event
 
       @doc false
       def handle_event({:consul_events, events}, state) do
@@ -43,9 +42,8 @@ defmodule Consul.Watch.Handler do
   @doc """
   Notifies handlers attached a Watch's event manager of Consul Events.
   """
-  @spec notify_events(GenEvent.manager, [Consul.Event.t]) :: :ok
   def notify_events(_, []), do: :ok
   def notify_events(manager, events) when is_pid(manager) and is_list(events) do
-    GenEvent.ack_notify(manager, {:consul_events, events})
+    :gen_event.notify(manager, {:consul_events, events})
   end
 end

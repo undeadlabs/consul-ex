@@ -14,7 +14,7 @@ defmodule Consul.Request do
       <<"https://"::utf8, _::binary>> ->
         url
       _ ->
-        Path.join("http://#{host}:#{port}/v1", url)
+        Path.join("http://#{host()}:#{port()}/v1", url)
     end
   end
 

@@ -14,7 +14,6 @@ defmodule Consul.Watch.Event do
   @wait     "10m"
   @retry_ms 30 * 1000
 
-  @spec start_link(binary, GenEvent.handler | {GenEvent.handler, list}) :: GenServer.on_start
   def start_link(name, handlers \\ []) do
     GenServer.start_link(__MODULE__, [name, handlers])
   end
@@ -24,13 +23,13 @@ defmodule Consul.Watch.Event do
   #
 
   def init([name, handlers]) do
-    {:ok, em} = GenEvent.start_link(handlers)
+    {:ok, em} = :gen_event.start_link(handlers)
 
     Enum.each handlers, fn
       {handler, args} ->
-        :ok = GenEvent.add_handler(em, handler, args)
+        :ok = :gen_event.add_handler(em, handler, args)
       handler ->
-        :ok = GenEvent.add_handler(em, handler, [])
+        :ok = :gen_event.add_handler(em, handler, [])
     end
 
     {:ok, %{name: name, em: em, index: nil, l_time: nil}, 0}
@@ -39,7 +38,7 @@ defmodule Consul.Watch.Event do
   def handle_info(:timeout, %{name: name, index: index, em: em, l_time: l_time} = state) do
     case Event.list(wait: @wait, index: index) do
       {:ok, response} ->
-        events     = Event.from_response(response) |> Enum.filter &(&1.name == name)
+        events     = Event.from_response(response) |> Enum.filter(&(&1.name == name))
         new_l_time = Event.last_time(events)
         notify_events(events, em, index, l_time)
         {:noreply, %{state | index: consul_index(response), l_time: new_l_time}, 0}
